@@ -5,34 +5,50 @@ window.onload = function() {
 
 
 // fetch a user and display them one at a time
-let arrayOfContacts = [];
+let addressList = document.getElementById("container");
 
 const getContacts = () => {
-    fetch('https://randomuser.me/api/')
+    fetch('https://randomuser.me/api/?results=5')
       .then(res => res.json())
-      .then(data => arrayOfContacts = data)
+      .then(data => people = data.results)
+      .then(people => {  people.map((person, i) => {
+        let html = `
+        <h4>${person.name.first}  ${person.name.last}</h4>
+        <img src="${person.picture.large}">
+        
+        
+        `;
       
-      .then(data => {console.log(arrayOfContacts)}) // Remove this later
-  }
+      
+      addressList.insertAdjacentHTML("afterbegin", html);
+  })
+})
+}
+
+// functionshowHide() {
+
+
+
+// }
 
 // Display a user in your address book array by name and picture
 
-const displayContacts = () => {
+// const displayContacts = () => {
 
-    getContacts();
+//     getContacts();
 
-    for(let i = 0; i < arrayOfContacts.length; i++) {
+//     for(let i = 0; i < arrayOfContacts.length; i++) {
 
-    let addressList = document.getElementById("container");
+//     let addressList = document.getElementById("container");
 
-        let html = `
-        <h1>${arrayOfContacts[i].name.first} ${arrayOfContacts[i].name.last}</h1>
+//         let html = `
+//         <h1>${arrayOfContacts[i].name.first} ${arrayOfContacts[i].name.last}</h1>
 
-    `;
+//     `;
 
-    addressList.insertAdjacentHTML("afterbegin", html)
+//     addressList.insertAdjacentHTML("afterbegin", html)
 
-    }
+//     }
     // what to put in the container
     // if i use a loop here, i'll have to use bracket notation.
     // arrayOfContacts[i].name.first .name.last, 
@@ -41,4 +57,4 @@ const displayContacts = () => {
     // person's address, phone, email
 
 // array.map(each, index) => { // build your address card with dot notation each.name.first
-}
+// }
