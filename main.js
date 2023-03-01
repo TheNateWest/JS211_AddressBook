@@ -9,7 +9,12 @@ let addressList = document.getElementById("container");
 
 const getContacts = () => {
     fetch('https://randomuser.me/api/?results=5')
-      .then(res => res.json())
+      .then(res => {
+        if(!res.ok) {
+          throw Error(res.statusText)
+        } return res.json()
+      })
+      // .then(res => res.json())
       .then(data => people = data.results)
       .then(people => {  people.map((person, i) => {
         let html = `
