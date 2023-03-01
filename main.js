@@ -16,6 +16,7 @@ const getContacts = () => {
       })
       // .then(res => res.json())
       .then(data => people = data.results)
+      .catch(err => console.log(`Error, ${err}`)) 
       .then(people => {  people.map((person, i) => {
         let html = `
         <h4>${person.name.first}  ${person.name.last}</h4>
@@ -30,6 +31,7 @@ const getContacts = () => {
 })
 }
 
+const assert = require('assert');
 // functionshowHide() {
 
 
