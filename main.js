@@ -1,11 +1,22 @@
 window.onload = function() {
-    displayContacts()
+    getContacts()
 
 }
+let people = []
 
+const container=document.getElementById("container")
 
 // fetch a user and display them one at a time
 let addressList = document.getElementById("container");
+
+const displayInfo = (element) => {
+  const el=document.getElementById(element.id+"-person")
+  if(!el.style.display || el.style.display === "none") {
+    return el.style.display="flex"
+  }
+el.style.display="none"
+
+}
 
 const getContacts = () => {
     fetch('https://randomuser.me/api/?results=5')
@@ -17,21 +28,41 @@ const getContacts = () => {
       // .then(res => res.json())
       .then(data => people = data.results)
       .catch(err => console.log(`Error, ${err}`)) 
-      .then(people => {  people.map((person, i) => {
-        let html = `
+      .then(()=>{
+        console.log(people)
+
+        people.forEach((person) => {
+        const content=document.createElement("div")
+        // console.log(content)
+        content.innerHTML=`
         <h4>${person.name.first}  ${person.name.last}</h4>
-        <img src="${person.picture.large}">
+          <img src="${person.picture.large}"/>
+        <button id=${person.login.uuid} onclick=displayInfo(this)> More Info </button>
+        <div id=${person.login.uuid+"-person"} class="info">
+          email:${person.email}
+        </div>
+        `
+        
+        console.log(content)
+        container.appendChild(content);
+        })
+      })
+      // .then(people => {  people.map((person, i) => {
+      //   let html = `
+      //   <h4>${person.name.first}  ${person.name.last}</h4>
+      //   <img src="${person.picture.large}">
         
         
-        `;
+      //   `;
       
       
-      addressList.insertAdjacentHTML("afterbegin", html);
-  })
-})
+      // addressList.insertAdjacentHTML("afterbegin", html);
+//   })
+// })
 }
 
-const assert = require('assert');
+
+// const assert = require('assert');
 // functionshowHide() {
 
 
